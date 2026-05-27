@@ -29,7 +29,7 @@ async function initDatabase() {
     );
   `);
 
-  // Заполнение товарами
+  // Заполнение товарами, если таблица пуста
   const count = db.exec("SELECT COUNT(*) as count FROM products");
   if (count.length === 0 || count[0].values[0][0] === 0) {
     const products = [
@@ -53,9 +53,9 @@ async function initDatabase() {
     stmt.free();
   }
 
-  // Автосохранение раз в 10 секунд
+  // Автосохранение каждые 10 секунд
   setInterval(() => saveDatabase(), 10000);
-  console.log("SQL.js база данных готова");
+  console.log("База данных SQL.js инициализирована");
   return db;
 }
 
@@ -67,7 +67,7 @@ function saveDatabase() {
   }
 }
 
-// Обёртки для совместимости с server.js (callback-стиль)
+// Обёртки для совместимости с callback-стилем в server.js
 module.exports = {
   initDatabase,
   get: (sql, params, callback) => {
@@ -96,9 +96,9 @@ module.exports = {
   run: (sql, params, callback) => {
     try {
       const stmt = db.prepare(sql);
-      stmt.run(params);
+      const info = stmt.run(params);
       stmt.free();
-      callback(null, { lastID: db.exec("SELECT last_insert_rowid()")[0].values[0][0] });
+      callback(null, { lastID: info.lastInsertRowid });
     } catch (err) {
       callback(err, null);
     }
