@@ -4,17 +4,11 @@ const path = require('path');
 const db = require('./database');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-
-// Обслуживание статических файлов React (после сборки, но для разработки используем прокси)
-// В режиме разработки фронтенд запрашивает API через proxy (см. frontend/package.json)
-// Дополнительно отдаём статику, если нужно
 app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// API endpoints
 
 // получить все товары
 app.get('/api/products', (req, res) => {
@@ -157,4 +151,10 @@ app.delete('/api/admin/products/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на http://localhost:${PORT}`);
+});
+
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
