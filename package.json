@@ -1,7 +1,8 @@
 {
   "name": "online-store",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
+    "prebuild": "cd frontend && npm install",
+    "build": "cd frontend && npm run build",
     "start": "node backend/server.js"
   }
 }
