@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const dbModule = require('./database');
+const db = require('./database');   // здесь уже готовая БД
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,9 +10,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-// API
+// API (используем db.get, db.all, db.run – они callback-совместимы)
 app.get('/api/products', (req, res) => {
-  dbModule.all("SELECT * FROM products", [], (err, rows) => {
+  db.all("SELECT * FROM products", [], (err, rows) => {
     if (err) res.status(500).json({ error: err.message });
     else res.json(rows);
   });
@@ -21,7 +21,7 @@ app.get('/api/products', (req, res) => {
 app.post('/api/register', (req, res) => {
   const { email, password, name } = req.body;
   if (!email || !password) return res.status(400).json({ error: "Email и пароль обязательны" });
-  dbModule.run(
+  db.run(
     "INSERT INTO users (email, password, name) VALUES (?, ?, ?)",
     [email, password, name || email.split('@')[0]],
     function(err) {
@@ -38,7 +38,7 @@ app.post('/api/register', (req, res) => {
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: "Email и пароль обязательны" });
-  dbModule.get(
+  db.get(
     "SELECT id, name, email FROM users WHERE email = ? AND password = ?",
     [email, password],
     (err, user) => {
@@ -53,10 +53,5 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
-// Запуск после инициализации БД
-dbModule.initDatabase().then(() => {
-  app.listen(PORT, () => console.log(`✅ Сервер запущен на порту ${PORT}`));
-}).catch(err => {
-  console.error('❌ Ошибка инициализации БД:', err);
-  process.exit(1);
-});
+// Запуск
+app.listen(PORT, () => console.log(`✅ Сервер запущен на порту ${PORT}`));
