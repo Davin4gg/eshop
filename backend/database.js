@@ -2,7 +2,13 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const dbPath = path.join(__dirname, 'store.db');
-const db = new sqlite3.Database(dbPath);
+const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+        console.error('Ошибка подключения к БД:', err.message);
+    } else {
+        console.log('Подключение к БД установлено');
+    }
+});
 
 // Инициализация таблиц и заполнение товарами (seed)
 db.serialize(() => {
