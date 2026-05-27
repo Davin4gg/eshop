@@ -1,7 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const db = require('./database');
+const db = dbModule('./database');
+const dbModule = require('./database');
+
+// Инициализируем базу перед запуском сервера
+dbModule.initDatabase().then(() => {
+  console.log('База данных готова');
+}).catch(err => {
+  console.error('Ошибка инициализации БД:', err);
+  process.exit(1);
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
