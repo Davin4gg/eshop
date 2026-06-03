@@ -200,9 +200,10 @@ app.get('/api/orders/:userId', (req, res) => {
   );
 });
 
+app.use('/images', express.static('/data/images'));
+
 // Для всех остальных запросов отдаём index.html (для клиентского роутинга)
 app.use(express.static(path.join(__dirname, 'public', 'build')));
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
