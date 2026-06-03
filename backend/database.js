@@ -1,7 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const dbDir = process.env.AMVERA ? '/data' : path.join(__dirname, '../data');
-const dbPath = path.join(__dirname, 'eshop3.sqlite');
+const dbPath = '/data/eshop_final.sqlite'; 
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
         console.error('Ошибка подключения к SQLite:', err.message);
