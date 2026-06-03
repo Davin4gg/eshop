@@ -1,8 +1,6 @@
 node_modules/
 backend/node_modules/
 backend/public/node_modules/
-*.sqlite
-*.sqlite3
 backend/*.sqlite
 .env
 .env.local
@@ -14,5 +12,4 @@ yarn-debug.log*
 yarn-error.log*
 .npm/
 _logs/
-.DS_Store
 Thumbs.db
