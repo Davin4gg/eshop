@@ -13,6 +13,7 @@ run:
   scriptArguments: null
   nodeArguments: null
   command: cd backend && node server.js
-  persistenceMount: /data
+  persistenceMount:
+    presistance: /data:eshop2.sqlite
   containerPort: "80"
   servicePort: "80"
