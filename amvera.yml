@@ -1,18 +1,8 @@
 meta:
-  environment: nodejs
+  environment: node
   toolchain:
     name: npm
     version: "20"
 build:
-  skip: false
-  additionalCommands: null
-  artifacts:
-    "*": /
-run:
-  scriptName: null
-  scriptArguments: null
-  nodeArguments: null
-  command: npm run start
-  persistenceMount: /data
-  containerPort: "80"
-  servicePort: "80"
+  buildCommand: cd backend && npm install
+  startCommand: node backend/server.js
