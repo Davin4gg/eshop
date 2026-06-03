@@ -6,6 +6,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/images', express.static('/data/images'));
+app.use(express.static(path.join(__dirname, 'public', 'build')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
+});
 
 function isAdmin(req, res, next) {
   const authHeader = req.headers.authorization || '';
@@ -198,14 +203,6 @@ app.get('/api/orders/:userId', (req, res) => {
       else res.json(rows);
     }
   );
-});
-
-app.use('/images', express.static('/data/images'));
-
-// Для всех остальных запросов отдаём index.html (для клиентского роутинга)
-app.use(express.static(path.join(__dirname, 'public', 'build')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 80;
