@@ -4,6 +4,11 @@ meta:
     name: npm
     version: "20"
 build:
+  requirements:
+    - backend/
+  steps:
+    - cd backend && npm install
+    - cd backend/public && npm install && npm run build
   skip: false
   additionalCommands: null
   artifacts:
