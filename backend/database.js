@@ -22,6 +22,15 @@ db.serialize(() => {
     )
   `);
 
+      db.run(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'`, (err) => {
+        if (err) {
+            // Если колонка уже есть, SQLite выдаст ошибку. Мы её просто игнорируем.
+            console.log("Колонка 'role' уже существует или не требует добавления.");
+        } else {
+            console.log("Колонка 'role' успешно внедрена в структуру старой таблицы!");
+        }
+    });
+
   // Таблица товаров
   db.run(`
     CREATE TABLE IF NOT EXISTS products (
