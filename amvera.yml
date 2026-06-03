@@ -1,0 +1,13 @@
+meta:
+  environment: node
+  toolchain:
+    name: npm
+    version: "20"
+build:
+  buildCommand: npm run install-all
+  startCommand: npm start
+  env:
+    - name: PORT
+      value: 3000
+    - name: DATABASE_URL
+      value: "sqlite:/data/store.db"
