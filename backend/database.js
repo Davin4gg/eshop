@@ -16,6 +16,7 @@ db.serialize(() => {
       email TEXT UNIQUE NOT NULL,
       password TEXT NOT NULL,
       name TEXT
+      role TEXT DEFAULT 'user'
     )
   `);
 
