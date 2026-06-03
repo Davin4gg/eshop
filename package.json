@@ -4,7 +4,7 @@
   "description": "Node.js + SQLite app for Amvera",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/public/index.js"
+    "start": "node backend/server.js"
   },
   "dependencies": {
     "express": "^4.19.2",
