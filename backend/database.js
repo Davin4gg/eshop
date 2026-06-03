@@ -12,11 +12,6 @@ if (!fs.existsSync(dbDir)){
     fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) console.error('Ошибка БД:', err.message);
-    else console.log('База данных успешно подключена по пути: ' + dbPath);
-});
-
 // Инициализация таблиц и заполнение товарами (seed)
 db.serialize(() => {
   // Таблица пользователей
