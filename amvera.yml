@@ -4,11 +4,6 @@ meta:
     name: npm
     version: "20"
 build:
-  requirements:
-    - backend/
-  steps:
-    - cd backend && npm install
-    - cd backend/public && npm install && npm run build
   skip: false
   additionalCommands: null
   artifacts:
@@ -17,7 +12,7 @@ run:
   scriptName: null
   scriptArguments: null
   nodeArguments: null
-  command: cd backend && node server.js
+  command: cd backend && npm start
   persistenceMount: /data
   containerPort: "80"
   servicePort: "80"

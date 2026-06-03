@@ -2,19 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./database');
-
 const app = express();
-const PORT = process.env.PORT || 80;
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
 
 app.use(cors());
 app.use(express.json());
-
-// Дополнительно отдаём статику, если нужно
-app.use(express.static(path.join(__dirname, 'public')));
 
 function isAdmin(req, res, next) {
   const authHeader = req.headers.authorization || '';
@@ -210,6 +201,13 @@ app.get('/api/orders/:userId', (req, res) => {
 });
 
 // Для всех остальных запросов отдаём index.html (для клиентского роутинга)
+app.use(express.static(path.join(__dirname, 'public', 'build')));
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 80;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
