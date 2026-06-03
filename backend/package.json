@@ -1,14 +1,13 @@
 {
-  "name": "online-store-backend",
+  "name": "amvera-sqlite-app",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "Node.js + SQLite app for Amvera",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "cd ../frontend && npm install && npm run build && cp -r build ../backend/public"
+    "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "sqlite3": "^5.1.7",
-    "cors": "^2.8.5"
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
   }
 }
