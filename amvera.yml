@@ -4,6 +4,9 @@ meta:
     name: npm
     version: "20"
 build:
+  requirements:
+    - package.json
+    - backend/server.js
   skip: false
   additionalCommands: null
   artifacts:
